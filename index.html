@@ -12,87 +12,202 @@
         body { font-family: 'Inter', 'Noto Serif SC', serif; background-color: var(--bg); color: #ececec; -webkit-font-smoothing: antialiased; }
         .glass { background: rgba(20, 20, 20, 0.7); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08); }
         .safe-area-bottom { padding-bottom: env(safe-area-inset-bottom); }
-        .scenario-tag { background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); }
+        .scenario-card { background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.2); }
         .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        .whitespace-pre-line { white-space: pre-line; }
     </style>
 </head>
 <body class="min-h-screen">
     <div id="app" class="max-w-md mx-auto min-h-screen flex flex-col"></div>
 
     <script>
-        // 从 sales-data.ts 完整提取的数据
         const artists = [
             {
                 id: "fangzi",
                 name: "房梓",
                 englishName: "Fang Zi",
-                tag: "材质景观",
-                bio: `房梓毕业于清华大学美术学院。二十多年来，他一直在探索材料语言的可能性，2021年他研发了一种独创材料 YAN powder（岩粉），这种矿物材料在温湿度变化中会自然结晶、收缩和龟裂，让画面慢慢生成出复杂的结构。\n\n所以房梓的绘画看上去属于抽象绘画，但更准确地说他用他自己的材料让画面构成了Material Landscape（材料风景）画面看起来像自然风景，但其实是材料自己形成的地貌。`,
-                bioEn: `Fang Zi graduated from the Academy of Arts & Design at Tsinghua University. In 2021, he developed an original material called YAN powder, a mineral substance that naturally crystallizes, contracts, and cracks, creating "Material Landscape" through natural geological forces.`,
+                bio: "房梓毕业于清华大学美术学院。二十多年来，他一直在探索材料语言的可能性，2021年他研发了一种独创材料 YAN powder（岩粉），这种矿物材料在温湿度变化中会自然结晶、收缩和龟裂，让画面慢慢生成出复杂的结构。\n\n所以房梓的绘画看上去属于抽象绘画，但更准确地说他用他自己的材料让画面构成了Material Landscape（材料风景）画面看起来像自然风景，但其实是材料自己形成的地貌。",
+                bioEn: "Fang Zi graduated from the Academy of Arts & Design at Tsinghua University. For over twenty years, he has been exploring the possibilities of material language. In 2021, he developed an original material called YAN powder, a mineral substance that naturally crystallizes, contracts, and cracks with changes in temperature and humidity, allowing complex structures to gradually emerge on the canvas.\n\nTherefore, while Fang Zi's paintings appear to be abstract art, more precisely, he uses his own materials to create what we call Material Landscape. The images look like natural scenery, but they are actually geological formations created by the materials themselves.",
                 artworks: [
-                    { title: "庄园", englishTitle: "Golden Fleece", description: "这件作品的能量集中在那些闪现的金色上。金色在西方艺术史里常象征着被追寻的宝藏、神性或者终极的目标。在这里，它像是在岩粉形成的厚重肌理中突然透出的光，有一种历经磨难后的奖赏感。", descriptionEn: "The energy is concentrated in the flashing golden tones, symbolizing pursued treasures or divinity breaking through heavy textures." },
-                    { title: "洛神", englishTitle: "Drama", description: "这是一件双联作品。中间那道斜向的金色像是突然打开的一束光，极具戏剧性。它打破了背景那种沉静、深邃的蓝色调，产生了一种视觉上的爆发力。", descriptionEn: "A diptych where the diagonal golden streak acts as a sudden beam of light, breaking the deep blue background with dramatic visual power." },
-                    { title: "无极·若谷", englishTitle: "East", description: "这件作品的气质非常接近中国传统的青绿山水，但它是用岩粉这种极其现代和物理的方式呈现出来的。目前由上海藏家收藏并委托销售。", descriptionEn: "Features a temperament close to traditional blue-green landscapes, currently held by a Shanghai collector." }
+                    {
+                        title: "庄园",
+                        englishTitle: "Golden Fleece",
+                        description: "这件作品的名字来自希腊神话里的\"金羊毛\"。在故事里它象征一种被追寻的宝藏，画面里那些闪现的金色就像在复杂结构中慢慢被发现的光，让整幅作品带着一种探寻的感觉。整幅作品的能量其实都集中在这些闪现的金色上。",
+                        descriptionEn: "The name of this work comes from the \"Golden Fleece\" in Greek mythology. In the story, it symbolizes a treasure being pursued. The glimmering gold in the painting is like light slowly discovered within complex structures, giving the entire work a sense of exploration. The energy of the whole piece is actually concentrated in these flashing golden tones."
+                    },
+                    {
+                        title: "洛神",
+                        englishTitle: "Drama",
+                        description: "这是一个双联作品，中间那道金色像突然打开的一束光。左右两边的深色空间形成一种很强的对比，让画面看起来像一个正在展开的瞬间。很多人会觉得它很有戏剧性。",
+                        descriptionEn: "This is a diptych work, with the golden streak in the middle like a sudden beam of light. The dark spaces on both sides create a strong contrast, making the image look like an unfolding moment. Many people find it very dramatic."
+                    },
+                    {
+                        title: "无极·龙吟",
+                        englishTitle: "Green Dinosaur",
+                        description: "这件作品最吸引人的其实是颜色。那种带一点荧光感的绿色在画面里非常少见。画面里的纹理像岩层、像某种远古生命或者自然能量。画面里的细小结构像在不断生长，所以作品有一种很强的生命感。",
+                        descriptionEn: "What's most captivating about this work is actually the color. That slightly fluorescent green is very rare in paintings. The textures in the image resemble rock layers, ancient life forms, or natural energy. The tiny structures in the painting seem to be constantly growing, giving the work a strong sense of vitality."
+                    },
+                    {
+                        title: "无极·若谷",
+                        englishTitle: "East",
+                        description: "这件作品的气质很接近中国传统的青绿山水。层次像云气一样慢慢叠在一起，很容易让人想到东方山水里那种\"气\"的空间感。表面那些细腻的肌理非常特别，很像中国画里\"皴\"和\"擦\"的一些笔法，但它又是使用的现代的材料，甚至没有用毛笔。整幅作品显得既古典又当代。\n\n这件作品其实已经被一位上海藏家收藏，目前是通过画廊做委托销售。很多藏家会在收藏一段时间后，让作品再次流通，这是艺术收藏里很正常的方式。",
+                        descriptionEn: "The temperament of this work is very close to traditional Chinese blue-green landscape painting. The layers slowly overlap like clouds, easily evoking the spatial sense of \"qi\" in Eastern landscapes. The delicate textures on the surface are very special, resembling the \"cun\" and \"ca\" brushwork techniques in Chinese painting, but using modern materials without even a brush. The entire work appears both classical and contemporary.\n\nThis piece has actually been collected by a Shanghai collector and is currently on consignment sale through the gallery. Many collectors allow their works to circulate again after collecting for some time - this is a very normal practice in art collection."
+                    },
+                    {
+                        title: "寿春",
+                        englishTitle: "The Eternal Kingdom",
+                        description: "《寿春》这件作品的中国气质会更明显一些。暖金色的中心像是一片被光照亮的山川，而周围的蓝灰色让空间显得很深远。艺术家在这件作品里用了很多不同的肌理结构，所以表面会呈现出非常丰富的层次感。",
+                        descriptionEn: "The Chinese temperament of \"The Eternal Kingdom\" is more pronounced. The warm golden center resembles mountains illuminated by light, while the surrounding blue-gray creates a sense of deep space. The artist used many different texture structures in this work, so the surface presents very rich layers."
+                    }
                 ],
                 salesScenarios: [
-                    { title: "国际藏家", target: "对地质、自然、宏大叙事感兴趣的国际客户", script: "You might recognize an echo of J.M.W. Turner's sublime landscapes here. But unlike traditional painting, Fang Zi doesn't 'paint' the mountains; he creates the conditions for them to grow. It's a 'Material Landscape' manifesting nature's own geological forces.", scriptEn: "You might recognize an echo of J.M.W. Turner's sublime landscapes here..." },
-                    { title: "华人资深藏家", target: "对东方美学、抒情抽象有研究的藏家", script: "这件作品是对赵无极、朱德群那一代东方抒情抽象的当代回应。不同的是，房梓用岩粉这种矿物材料，在二维平面上模拟出了大自然数万年才能形成的'皴、擦'肌理。", scriptEn: "A contemporary response to the lyrical abstraction of Zao Wou-Ki..." }
+                    {
+                        title: "场景1：国际藏家",
+                        titleEn: "Scenario 1: International Collectors",
+                        target: "国际藏家 / 资深西方背景藏家",
+                        targetEn: "International collectors / Senior collectors with Western background",
+                        targetArtworks: "《庄园》（Golden Fleece，3米巨幅）或大画",
+                        targetArtworksEn: "Golden Fleece (3-meter large scale) or large paintings",
+                        keyPoints: "崇高美学（Sublime）与 物质风景（Material Landscape）",
+                        keyPointsEn: "Sublime aesthetics and Material Landscape",
+                        script: "Hello! Are you drawn to the inner light of this piece? This is a signature work by Fang Zi, the co-founder of Deep Time Gallery.\n\nYou might recognize an echo of J.M.W. Turner's sublime landscapes here—that same atmospheric turbulence and dramatic light. But what's revolutionary is his medium: YAN powder. This is a mineral material he spent over 20 years developing.\n\nInstead of traditional layering, the composition actually 'grows' through natural crystallization and shrinkage as the humidity changes. We call it a 'Material Landscape'—it's not a depiction of nature, but nature's own geological forces manifesting on the canvas. As Fang Zi often says, his process is 'random but never accidental'; it's a powerful contemporary evolution of abstract expressionism.",
+                        scriptEn: "Hello! Are you drawn to the inner light of this piece? This is a signature work by Fang Zi, the co-founder of Deep Time Gallery.\n\nYou might recognize an echo of J.M.W. Turner's sublime landscapes here—that same atmospheric turbulence and dramatic light. But what's revolutionary is his medium: YAN powder. This is a mineral material he spent over 20 years developing.\n\nInstead of traditional layering, the composition actually 'grows' through natural crystallization and shrinkage as the humidity changes. We call it a 'Material Landscape'—it's not a depiction of nature, but nature's own geological forces manifesting on the canvas. As Fang Zi often says, his process is 'random but never accidental'; it's a powerful contemporary evolution of abstract expressionism."
+                    },
+                    {
+                        title: "场景2：华人资深藏家",
+                        titleEn: "Scenario 2: Senior Chinese Collectors",
+                        target: "华人资深藏家 / 美术史关注者",
+                        targetEn: "Senior Chinese collectors / Art history enthusiasts",
+                        targetArtworks: "《无极·若谷》（East）、《无极·龙吟》（Green Dinosaur）或《枫桥夜泊》",
+                        targetArtworksEn: "East, Green Dinosaur, or Night Mooring at Maple Bridge",
+                        keyPoints: "东方抒情抽象的\"当代进化\"与 收藏流转价值",
+                        keyPointsEn: "Contemporary evolution of Eastern lyrical abstraction and collection circulation value",
+                        script: "您好，看您在这幅画前驻足很久。这件《无极·若谷》在空间处理上非常有意思，它其实是对赵无极、朱德群两位大师所开创的东方抒情抽象的一次当代回应。\n\n赵无极先生解决了油画的东方化，而房梓老师更进了一步。他完全抛弃了毛笔，用他研发的材料岩粉（YAN powder）模拟出了中国画里'皴、擦'的肌理。您看这些层次，像不像青绿山水里的'气'？\n\n这种'物质风景'的魅力在于它有一种呼吸感。而且像这件作品，之前已经由上海资深藏家收藏，现在通过我们画廊进行委托流转，这恰恰证明了房梓老师的作品在二级市场已经具备了非常成熟的收藏循环。在这个价位段入藏这样一件具有清晰美术史脉络的作品，它的上升空间是非常坚实的。",
+                        scriptEn: "Hello, I noticed you've been admiring this painting for quite a while. This piece \"East\" is very interesting in its spatial treatment - it's actually a contemporary response to the Eastern lyrical abstraction pioneered by masters Zao Wou-Ki and Chu Teh-Chun.\n\nZao Wou-Ki solved the Easternization of oil painting, and Mr. Fang Zi has taken it a step further. He completely abandoned the brush, using his developed YAN powder material to simulate the \"cun and ca\" textures of Chinese painting. Look at these layers - don't they resemble the \"qi\" in blue-green landscapes?\n\nThe charm of this \"Material Landscape\" lies in its breathing quality. Moreover, this piece was previously collected by a senior Shanghai collector and is now on consignment through our gallery - this precisely proves that Mr. Fang Zi's works have already established a very mature collection cycle in the secondary market. Acquiring a work with such a clear art historical lineage at this price point offers very solid appreciation potential."
+                    },
+                    {
+                        title: "场景3：年轻新贵",
+                        titleEn: "Scenario 3: Young Elite",
+                        target: "年轻新贵 / 建筑与设计背景藏家",
+                        targetEn: "Young elites / Collectors with architecture and design background",
+                        targetArtworks: "《洛神》（Drama）或《寿春》（The Eternal Kingdom）",
+                        targetArtworksEn: "Drama or The Eternal Kingdom",
+                        keyPoints: "材料结构主义、戏剧张力与 空间的\"能量场\"",
+                        keyPointsEn: "Material structuralism, dramatic tension, and spatial \"energy field\"",
+                        script: "您好，这件双联作品《洛神》的张力非常强。\n\n很多抽象画是平面的，但您从侧面看，这种岩粉材料在干透过程中形成的自然结晶和龟裂，形成了一种极其复杂的地貌结构。中间那道金色像是在戏剧舞台上突然打开的闪光，打破了空间的静谧。\n\n如果您家里是那种极简的现代空间，或者有大面积的留白，这件作品挂上去后，它不仅仅是一张画，它会成为一个能量中心。它那种色彩和特殊的岩层肌理，会让空间产生一种向外生长的生命力。",
+                        scriptEn: "Hello, this diptych \"Drama\" has tremendous tension.\n\nMany abstract paintings are flat, but if you look from the side, the natural crystallization and cracking formed as this YAN powder material dries creates an extremely complex geological structure. The golden streak in the middle is like a sudden flash on a theatrical stage, breaking the spatial tranquility.\n\nIf your home has that minimalist modern space, or large areas of white space, hanging this piece won't just add a painting - it will become an energy center. Its colors and special rock-layer textures will give the space an outward-growing vitality."
+                    },
+                    {
+                        title: "场景4：时尚海归",
+                        titleEn: "Scenario 4: Fashion-Forward Returnees",
+                        target: "年轻新贵 / 时尚海归 / 艺术新藏家",
+                        targetEn: "Young elites / Fashion-forward returnees / New art collectors",
+                        targetArtworks: "《倾倒之月》（Flow of Aquarius）、《哈瓦那的夏天》（Summer in Havana）",
+                        targetArtworksEn: "Flow of Aquarius, Summer in Havana",
+                        keyPoints: "色彩表现、现代感",
+                        keyPointsEn: "Color expression, modern aesthetic",
+                        script: "您好！是被这抹蓝色吸引过来的吧？这清新脱俗的蓝色调，配上岩粉自然生成的肌理，有一种非常迷幻且当代的视觉冲击力。\n\n特别有趣的是它的英文名 'Aquarius'（水瓶座）。画面的色彩和动势带有一种水瓶座特有的独立与自由。无论您是这个星座的拥趸，还是单纯喜欢这种宇宙流动感的叙事，它挂在家里绝对是空间的'视觉空调'。\n\n如果您更偏爱明亮温暖的色调，您一定要看这件《哈瓦那的夏天》。它和刚才那件蓝色的作品形成了一个完美的对比，充斥着黄色调的\"热力感\"与多巴胺能量。\n\n这种色彩放在餐厅或客厅，能瞬间提亮整个空间的能量场。是一种充满生命力的生活态度。作为入门级藏家，从这种色彩饱和、情绪价值拉满的作品切入，是性价比最高的选择。",
+                        scriptEn: "Hello! You must have been drawn by this blue, right? This refreshing blue tone, combined with the naturally generated texture of YAN powder, creates a very psychedelic and contemporary visual impact.\n\nWhat's particularly interesting is its English name 'Aquarius'. The colors and movement in the painting carry the unique independence and freedom of an Aquarius. Whether you're a fan of this zodiac sign or simply love this cosmic flowing narrative, hanging it at home would definitely make it the \"visual air conditioning\" of your space.\n\nIf you prefer bright and warm tones, you must see \"Summer in Havana\". It forms a perfect contrast with the blue piece, filled with the \"heat\" and dopamine energy of yellow tones.\n\nPlacing these colors in a dining room or living room can instantly brighten the entire space's energy field. It's a lifestyle attitude full of vitality. For entry-level collectors, starting with such color-saturated, emotionally fulfilling works is the most cost-effective choice."
+                    }
                 ]
             },
             {
                 id: "zhudi",
                 name: "朱迪",
                 englishName: "Zhu Di",
-                tag: "当代瓷板",
-                bio: "朱迪曾任教于威尼斯大学，他的作品是当代瓷板画的顶尖实验。他在1300度以上的窑火中，通过对釉料、矿物材料和火的精准控制，让材料本身说话。",
-                bioEn: "Former teacher at Ca' Foscari University, Zhu Di pioneers contemporary porcelain painting using high-temperature glazes.",
+                bio: "曾任教于威尼斯大学中文系，这段跨文化经历对他的创作产生了很深的影响。对朱迪来说，窑炉就像一个实验场。很多画面的结构其实是在烧制过程中自然形成的。因此他的作品既像绘画，也带有陶瓷材料特有的质感。\n\n朱迪的作品是当代瓷板画的顶尖实验。在当代艺术界，瓷板画的难度远超布面。它需要艺术家在瓷胎上精准控制釉料的干湿，然后交给 1300 度以上的窑火。在炉门打开前，谁也不知道这件作品是否能'存活'。这种'火中取栗'的低成品率，决定了每一件成品都是不可复制的艺术孤品。\n\n他跨文化旅居的经历，让他打破了瓷板画过去作为'工艺美术'的局限，将其彻底带入当代艺术语境。釉料质感的独特与油画笔触形成区别。这是'材料本身在说话'，也是我们深时美术馆一直推崇的'物质叙事'。",
+                bioEn: "He once taught at the Chinese Department of Ca' Foscari University of Venice, and this cross-cultural experience has deeply influenced his creative work. For Zhu Di, the kiln is like an experimental field. Many structural elements in his images are actually formed naturally during the firing process. Therefore, his works resemble both paintings and carry the unique texture of ceramic materials.\n\nZhu Di's works represent the cutting-edge experimentation in contemporary porcelain panel painting. In the contemporary art world, porcelain panel painting is far more difficult than canvas painting. It requires the artist to precisely control the moisture of the glaze on the porcelain body, then submit it to kiln fire above 1300 degrees Celsius. Before the kiln door opens, no one knows whether the piece will \"survive.\" This \"playing with fire\" low success rate determines that each finished piece is an irreproducible artistic masterpiece.\n\nHis cross-cultural living experience has allowed him to break through the past limitations of porcelain panel painting as \"decorative arts,\" bringing it completely into the contemporary art context. The unique texture of glaze distinguishes it from oil painting brushstrokes. This is \"the material speaking for itself,\" which is also the \"material narrative\" that Deep Time Gallery has always championed.",
                 artworks: [
-                    { title: "喜马拉雅", englishTitle: "Himalayas", description: "这幅作品呈现出一种类似云雪与岩层交叠的结构。瓷板画最难的是控制那种透明感，朱迪通过多次叠烧，让色彩产生了非常细微的变化，形成了一种雾气氤氲的空间感。", descriptionEn: "Visualizes overlapping clouds and rock layers with subtle color transitions and a misty spatial sense." }
+                    {
+                        title: "喜马拉雅",
+                        englishTitle: "Himalayas",
+                        description: "《喜马拉雅》是朱迪非常重要的一个系列。画面呈现出类似云雪与岩层交叠的结构。颜色之间非常细微的变化形成一种像雾气一样的空间感，画面既宏阔又安静。",
+                        descriptionEn: "\"Himalayas\" is a very important series by Zhu Di. The image presents a structure similar to overlapping clouds, snow, and rock layers. The very subtle changes between colors create a misty spatial sense, making the image both grand and tranquil."
+                    },
+                    {
+                        title: "无题",
+                        englishTitle: "Untitled (Diptych)",
+                        description: "这件作品是一个双联结构，画面更强调釉色在瓷面上的流动关系。铁锈色与灰白色在高温中相互渗透，窑火与釉色反应中慢慢生成。",
+                        descriptionEn: "This is a diptych structure, with the image emphasizing the flowing relationship of glaze colors on the porcelain surface. Rust colors and gray-white interpenetrate at high temperatures, slowly generated through the reaction of kiln fire and glaze."
+                    }
                 ]
             },
             {
                 id: "carlos",
-                name: "卡洛斯",
+                name: "卡洛斯·加西亚·拉奥斯",
                 englishName: "Carlos García Lahoz",
-                tag: "几何抽象",
-                bio: "西班牙雕塑家卡洛斯擅长用最简洁的几何形体来承载人类最基本的情感：母性、孤独、希望。他的作品通常具有极强的公共艺术感。",
-                bioEn: "Spanish sculptor focusing on geometric forms that carry universal emotions like motherhood, solitude, and hope.",
+                bio: "卡洛斯的作品其实一直在回答一个很简单的问题：雕塑能不能让人和人重新建立连接。\n\n他用非常简洁的几何形体，去承载像母性、孤独、希望这样最基本的人类情感。现在他在全球不同城市落地雕塑项目，让作品不只是被观看，而是成为一种公共经验。\n\n卡洛斯的作品在国际上其实已经有了很成熟的公立美术馆履历，他的大件作品很多都在欧洲城市广场上。这种小尺幅的作品，其实是给个人藏家提供了一个'拥有公共艺术精髓'的机会。随着他在更多城市落地项目，这些代表性母题的作品，流通性和收藏价值都是非常稳的。",
+                bioEn: "Carlos's work has always been answering a simple question: can sculpture help people reconnect with each other.\n\nHe uses very simple geometric forms to carry the most fundamental human emotions like motherhood, loneliness, and hope. Now he's implementing sculpture projects in different cities around the world, making his works not just to be viewed, but to become a shared public experience.\n\nCarlos's works already have a very mature public museum resume internationally, with many of his large pieces displayed in European city squares. These smaller scale works actually provide individual collectors with an opportunity to \"own the essence of public art.\" As he implements projects in more cities, these works with representative motifs have very stable circulation and collection value.",
                 artworks: [
-                    { title: "灵魂伴侣", englishTitle: "Soulmates", description: "两个几何体块以一种非常巧妙的方式相互咬合，既独立又相互支撑。这不仅是物理上的平衡，也是对真实人际关系的一种隐喻。", descriptionEn: "Two geometric blocks interlock, representing independence and mutual support in human relationships." },
-                    { title: "时间终止", englishTitle: "Expiry", description: "黑色的几何框架中，被红色的链条锁住了一部分。这种强烈的色彩对比带有一种宿命感，仿佛艺术家试图将某种无法言说的矛盾锁死在秩序之中。", descriptionEn: "Red chains within a black frame create a fatalistic tension, locking contradictions into order." }
+                    {
+                        title: "灵魂伴侣",
+                        englishTitle: "Soulmates",
+                        description: "这两个几何体块，它们并不是简单的堆叠，而是一种相互咬合、甚至有点\"死磕\"的状态。很像真实的人际关系——每个人都有棱有角，但正是因为这些凹凸不平的缝隙，才让两个灵魂能刚好嵌在一起，分不开，也离不掉。",
+                        descriptionEn: "These two geometric blocks are not simply stacked, but in a state of mutual interlocking, even a bit of \"wrestling.\" It's very much like real interpersonal relationships - everyone has their edges and corners, but it's precisely because of these uneven gaps that two souls can fit perfectly together, inseparable and unable to leave."
+                    },
+                    {
+                        title: "时间终止",
+                        englishTitle: "Expiry",
+                        description: "这件作品很有仪式感。它像是一个被按下了暂停键的黑匣子。中间那个被红链子拴住的部分，带有一种宿命般的紧张感。凑近看，那个红色的锁链其实是一种激烈的拉扯和矛盾，那种紧绷感好像随时要断裂。\n\n但如果你往后退几步，把视野放宽，你会发现这个矛盾被紧紧锁在一个黑色的框架里，在整个空间中显得非常微小、稳定。它想告诉你：很多让我们纠结到\"窒息\"的瞬间，其实只要把时间拉长、把视角放远，它们不过是宏大生命里一个安静的注脚而已。",
+                        descriptionEn: "This work has a strong sense of ritual. It's like a black box with the pause button pressed. The part chained by the red links carries a fatalistic tension. Up close, that red chain is actually an intense struggle and contradiction, the tension seeming ready to snap at any moment.\n\nBut if you step back a few paces and widen your view, you'll find this contradiction is tightly locked within a black frame, appearing very small and stable in the entire space. It wants to tell you: many moments that make us feel \"suffocated\" with entanglement, if only we extend the time and broaden the perspective, are merely quiet footnotes in the grand scheme of life."
+                    },
+                    {
+                        title: "希望",
+                        englishTitle: "Hope",
+                        description: "月亮或者是微光的地方，就是点睛之笔。作品以简洁而直接的视觉语言传递\"和平\"与\"希望\"的主题，以开放而温和的图像回应当下的世界语境，也让艺术回到一种最朴素而普遍的情感——对未来的希望。",
+                        descriptionEn: "The moon or the place of faint light is the finishing touch. The work conveys themes of \"peace\" and \"hope\" through simple and direct visual language, responding to the current world context with open and gentle imagery, and returning art to the most simple and universal emotion - hope for the future."
+                    }
                 ]
             },
             {
                 id: "shenli",
                 name: "沈厉",
                 englishName: "Shen Li",
-                tag: "地貌陶瓷",
-                bio: "沈厉的作品关注的是陶瓷作为一种物质的“地质属性”。他的画面中突起与陷落、粗粝与流动并存。曾获中国当代陶瓷艺术展金奖。",
-                bioEn: "Shen Li explores the 'geological properties' of ceramics, creating surfaces where roughness and flow coexist.",
+                bio: "他的作品最有特点的是一种类似地貌结构的抽象空间——画面中可以看到突起与陷落、光滑与粗粝、干裂与流动同时存在。这些不同质感的材料在叠加和覆盖中形成复杂的表面结构。他的作品被浙江美术馆收藏，曾获得中国当代陶瓷艺术展金奖。",
+                bioEn: "The most distinctive feature of his work is an abstract space resembling geological structures - you can see protrusions and depressions, smooth and rough, dry cracks and flowing elements coexisting in the image. These materials of different textures form complex surface structures through layering and covering. His works are collected by Zhejiang Art Museum and have won the Gold Award at the China Contemporary Ceramic Art Exhibition.",
                 artworks: [
-                    { title: "散落系列", englishTitle: "Crumblings", description: "表面结构像被时间侵蚀过一样逐渐松动和漂移。这是一种非常有张力的抽象空间，让人联想到干裂的大地或者干涸的河床。", descriptionEn: "Surface structures resemble erosion over time, evoking dried earth or riverbeds." }
+                    {
+                        title: "散落系列",
+                        englishTitle: "Crumblings",
+                        description: "这次展出的两件作品来自沈厉的\"散落系列\"。在这个系列中，他将不同材料不断叠加与覆盖，让表面结构像被时间侵蚀过一样逐渐松动、裂开和漂移。画面里的元素仿佛在缓慢漂浮或坠落，因此他把这个系列命名为\"散落\"。观看他的作品像是在观察一块被放大的岩石结构。",
+                        descriptionEn: "The two works exhibited this time are from Shen Li's \"Crumblings\" series. In this series, he continuously layers and covers different materials, allowing the surface structure to gradually loosen, crack, and drift as if eroded by time. The elements in the image seem to be slowly floating or falling, hence he named this series \"Crumblings.\" Viewing his work is like observing an enlarged rock structure."
+                    }
                 ]
             },
             {
                 id: "xiaocao",
                 name: "小草",
                 englishName: "Xiao Cao",
-                tag: "釉面流动",
-                bio: "小草的灵感来自于对自然的微观观察。她通过控制高温釉色的流动和重叠，形成了一种自然生长的节奏。",
-                bioEn: "Inspired by microscopic nature, she controls high-temperature glazes to create organic rhythms of growth.",
+                bio: "以自由艺术家的身份持续进行陶瓷与釉画创作。她的创作灵感往往来自自然中的细微观察，比如植物的生长、色彩的变化，或者自然表面的肌理。通过高温釉色的流动与叠加，她让画面形成一种类似自然生长的节奏。",
+                bioEn: "She continues to create ceramics and glaze paintings as an independent artist. Her creative inspiration often comes from subtle observations in nature, such as plant growth, color changes, or natural surface textures. Through the flowing and layering of high-temperature glazes, she creates a rhythm in her images similar to natural growth.",
                 artworks: [
-                    { title: "晴雨", englishTitle: "Sunnyrain", description: "色彩更加明艳，有一种向外生长的力量。蓝色背景中，大量垂直流动的釉色像瀑布或者植物的根系，形成一种非常活跃的视觉节奏。", descriptionEn: "Vivid colors and vertically flowing glazes resemble waterfalls or root systems." }
+                    {
+                        title: "晴雨",
+                        englishTitle: "Sunnyrain",
+                        description: "这件作品的画面像是一种天气变化的瞬间。暖色与冷色在交错流动，让人联想到阳光与雨水同时出现的时刻——也就是作品标题所说的\"晴雨\"。整体看起来既像自然景象，又带有一种轻盈的节奏感。",
+                        descriptionEn: "The image in this work is like a moment of weather change. Warm and cool colors flow and interweave, evoking the moment when sunshine and rain appear simultaneously - which is what the title \"Sunnyrain\" describes. Overall, it looks both like a natural scene and carries a light rhythmic quality."
+                    },
+                    {
+                        title: "探",
+                        englishTitle: "Explore",
+                        description: "这件作品的色彩更加鲜明，也更有一种向外生长的力量。蓝色背景中，大量垂直流动的釉色像瀑布或者植物的根系，从上方延展下来，形成一种非常活跃的视觉节奏。",
+                        descriptionEn: "The colors in this work are more vivid, with a stronger sense of outward growth. Against the blue background, abundant vertically flowing glazes extend downward like waterfalls or plant root systems, creating a very active visual rhythm."
+                    }
                 ]
             },
             {
                 id: "guozilong",
                 name: "郭子龙",
                 englishName: "Guo Zilong",
-                tag: "空间雕塑",
-                bio: "郭子龙毕业于清华大学美术学院。他以金属和综合材料为媒介，用金属去做线条、体块和支撑关系，让雕塑在空间里产生一种持续向外延展的张力。",
-                bioEn: "Tsinghua graduate using metal to create lines and support relationships that extend tension into space.",
+                bio: "郭子龙毕业于清华大学美术学院，长期从事雕塑与空间装置创作。他以金属和综合材料为媒介，他用金属去做线条、体块和支撑关系，让雕塑在空间里产生一种持续向外延展的张力。",
+                bioEn: "Guo Zilong graduated from the Academy of Arts & Design at Tsinghua University and has been engaged in sculpture and spatial installation creation for a long time. Using metal and mixed media as his medium, he creates lines, masses, and supporting relationships with metal, generating a continuously outward-extending tension in space.",
                 artworks: [
-                    { title: "竹叶", englishTitle: "Bamboo Leaves", description: "不锈钢的金属光泽和镂空形成的阴影，让这幅作品有种'呼吸感'。它不再是文人画里的弱不禁风，而是一种非常有力量、有逻辑的秩序美。", descriptionEn: "Stainless steel luster and shadows create a 'breathing' effect, blending logic with Zen spirit." }
+                    {
+                        title: "竹叶",
+                        englishTitle: "Bamboo Leaves",
+                        description: "不锈钢的金属光泽和镂空形成的阴影，让这幅作品在不同灯光下会有种\"呼吸感\"。它不再是那种文人画里的弱不禁风，而是一种非常有力量、有逻辑的秩序美。它更像是艺术家在试图用冰冷的现代材料，去复刻一种古老的东方禅意。",
+                        descriptionEn: "The metallic luster of stainless steel and the shadows formed by the hollow-out patterns give this work a \"breathing\" quality under different lighting. It's no longer the delicate fragility of literati painting, but a very powerful, logical order of beauty. It's more like the artist is trying to replicate an ancient Eastern Zen spirit using cold modern materials."
+                    }
                 ]
             }
         ];
@@ -102,7 +217,8 @@
         function render() {
             const root = document.getElementById('app');
             const filtered = artists.filter(a => 
-                a.name.includes(state.query) || a.englishName.toLowerCase().includes(state.query.toLowerCase()) || a.tag.includes(state.query)
+                a.name.includes(state.query) || 
+                (a.englishName && a.englishName.toLowerCase().includes(state.query.toLowerCase()))
             );
 
             if (state.view === 'detail') {
@@ -128,19 +244,16 @@
                     </div>
                     <div class="relative">
                         <i data-lucide="search" class="absolute left-4 top-3.5 w-4 h-4 text-zinc-500"></i>
-                        <input type="text" oninput="doSearch(event)" placeholder="${state.lang === 'zh' ? '寻找艺术家、风格或作品...' : 'Search artists...'}" 
+                        <input type="text" oninput="doSearch(event)" placeholder="${state.lang === 'zh' ? '搜索艺术家...' : 'Search artists...'}" 
                             class="w-full bg-white/5 border border-white/10 rounded-2xl py-3.5 pl-12 pr-4 text-sm focus:outline-none focus:border-blue-500/40 transition">
                     </div>
                 </header>
 
                 <main class="flex-1 p-5 space-y-4">
                     ${list.map(a => `
-                        <div onclick='openArtist("${a.id}")' class="glass p-6 rounded-[2rem] active:scale-[0.98] transition-all group">
-                            <div class="flex justify-between items-start mb-3">
-                                <h3 class="text-xl font-bold text-white group-hover:text-blue-400 transition">${state.lang === 'zh' ? a.name : a.englishName}</h3>
-                                <span class="text-[9px] px-2.5 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20 uppercase font-black">${a.tag}</span>
-                            </div>
-                            <p class="text-sm text-zinc-400 leading-relaxed line-clamp-3">${state.lang === 'zh' ? a.bio : a.bioEn}</p>
+                        <div onclick='openArtist("${a.id}")' class="glass p-6 rounded-[2rem] active:scale-[0.98] transition-all group cursor-pointer">
+                            <h3 class="text-xl font-bold text-white group-hover:text-blue-400 transition mb-3">${state.lang === 'zh' ? a.name : a.englishName}</h3>
+                            <p class="text-sm text-zinc-400 leading-relaxed line-clamp-3 whitespace-pre-line">${state.lang === 'zh' ? a.bio : a.bioEn}</p>
                             <div class="mt-5 flex items-center text-[10px] text-zinc-600 font-bold tracking-widest uppercase">
                                 <span>Learn More</span>
                                 <i data-lucide="arrow-right" class="w-3 h-3 ml-1.5 group-hover:translate-x-1 transition-transform"></i>
@@ -174,21 +287,26 @@
                                 ${a.artworks.map(w => `
                                     <div class="p-5 rounded-3xl bg-white/[0.03] border border-white/5">
                                         <div class="font-bold text-white mb-2">${state.lang === 'zh' ? w.title : w.englishTitle}</div>
-                                        <p class="text-xs text-zinc-400 leading-relaxed">${state.lang === 'zh' ? w.description : w.descriptionEn}</p>
+                                        <p class="text-xs text-zinc-400 leading-relaxed whitespace-pre-line">${state.lang === 'zh' ? w.description : w.descriptionEn}</p>
                                     </div>
                                 `).join('')}
                             </div>
                         </section>
 
-                        ${a.salesScenarios ? `
+                        ${a.salesScenarios && a.salesScenarios.length > 0 ? `
                         <section class="pb-10">
                             <h4 class="text-[10px] font-black text-amber-500 uppercase tracking-[0.25em] mb-5">${state.lang === 'zh' ? '销售话术实战' : 'Sales Scripts'}</h4>
                             <div class="space-y-4">
                                 ${a.salesScenarios.map(s => `
-                                    <div class="scenario-tag p-6 rounded-[2rem] relative overflow-hidden">
-                                        <div class="text-[10px] font-black uppercase mb-3 opacity-80">${s.title} ⮕ ${s.target}</div>
-                                        <p class="text-sm text-zinc-100 leading-relaxed italic">"${state.lang === 'zh' ? s.script : s.scriptEn}"</p>
-                                        <i data-lucide="quote" class="absolute -right-2 -bottom-2 w-16 h-16 opacity-5 rotate-12"></i>
+                                    <div class="scenario-card p-6 rounded-[2rem] relative overflow-hidden">
+                                        <div class="text-[12px] font-black text-amber-500 mb-1">${state.lang === 'zh' ? s.title : s.titleEn}</div>
+                                        <div class="text-[10px] text-amber-500/80 mb-3 border-b border-amber-500/20 pb-2">
+                                            <div>🎯 ${state.lang === 'zh' ? s.target : s.targetEn}</div>
+                                            <div class="mt-1">🖼️ ${state.lang === 'zh' ? s.targetArtworks : s.targetArtworksEn}</div>
+                                            <div class="mt-1">💡 ${state.lang === 'zh' ? s.keyPoints : s.keyPointsEn}</div>
+                                        </div>
+                                        <p class="text-sm text-zinc-100 leading-relaxed whitespace-pre-line italic relative z-10">"${state.lang === 'zh' ? s.script : s.scriptEn}"</p>
+                                        <i data-lucide="quote" class="absolute -right-2 bottom-2 w-16 h-16 opacity-5 rotate-12"></i>
                                     </div>
                                 `).join('')}
                             </div>

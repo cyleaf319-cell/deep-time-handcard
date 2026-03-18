@@ -2,38 +2,41 @@
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>深时美术馆 | 销售话术手卡</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
-        body { font-family: 'Inter', system-ui, sans-serif; background-color: #0a0a0a; color: #e5e5e5; }
-        .glass-card { background: rgba(23, 23, 23, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .detail-card { background: rgba(30, 30, 30, 0.4); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.05); }
-        .highlight { color: #60a5fa; }
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Inter:wght@300;400;600&display=swap');
+        :root { --bg: #050505; --card: #121212; --primary: #3b82f6; --accent: #f59e0b; }
+        body { font-family: 'Inter', 'Noto Serif SC', serif; background-color: var(--bg); color: #ececec; -webkit-font-smoothing: antialiased; }
+        .glass { background: rgba(20, 20, 20, 0.7); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .safe-area-bottom { padding-bottom: env(safe-area-inset-bottom); }
+        .scenario-tag { background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); }
+        .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
     </style>
 </head>
-<body class="min-h-screen pb-20">
-    <div id="app"></div>
+<body class="min-h-screen">
+    <div id="app" class="max-w-md mx-auto min-h-screen flex flex-col"></div>
 
     <script>
+        // 从 sales-data.ts 完整提取的数据
         const artists = [
             {
                 id: "fangzi",
                 name: "房梓",
                 englishName: "Fang Zi",
                 tag: "材质景观",
-                bio: "房梓毕业于清华大学美术学院。2021年他研发了一种独创材料 YAN powder（岩粉），让画面慢慢生成出Material Landscape（材料风景）。",
-                bioEn: "Fang Zi developed YAN powder, a mineral substance that creates 'Material Landscape' through natural crystallization.",
+                bio: `房梓毕业于清华大学美术学院。二十多年来，他一直在探索材料语言的可能性，2021年他研发了一种独创材料 YAN powder（岩粉），这种矿物材料在温湿度变化中会自然结晶、收缩和龟裂，让画面慢慢生成出复杂的结构。\n\n所以房梓的绘画看上去属于抽象绘画，但更准确地说他用他自己的材料让画面构成了Material Landscape（材料风景）画面看起来像自然风景，但其实是材料自己形成的地貌。`,
+                bioEn: `Fang Zi graduated from the Academy of Arts & Design at Tsinghua University. In 2021, he developed an original material called YAN powder, a mineral substance that naturally crystallizes, contracts, and cracks, creating "Material Landscape" through natural geological forces.`,
                 artworks: [
-                    { title: "庄园", titleEn: "Golden Fleece", desc: "能量集中在闪现的金色上，象征被追寻的宝藏。", descEn: "Energy concentrated in flashing gold, symbolizing pursued treasure." },
-                    { title: "洛神", titleEn: "Drama", desc: "双联作品，中间金色如突然打开的光，极具戏剧性。", descEn: "Diptych work, the golden streak is like a sudden beam of light." },
-                    { title: "无极·若谷", titleEn: "East", desc: "气质接近青绿山水，由上海藏家收藏并委托销售。", descEn: "Close to traditional blue-green landscape, currently on consignment." }
+                    { title: "庄园", englishTitle: "Golden Fleece", description: "这件作品的能量集中在那些闪现的金色上。金色在西方艺术史里常象征着被追寻的宝藏、神性或者终极的目标。在这里，它像是在岩粉形成的厚重肌理中突然透出的光，有一种历经磨难后的奖赏感。", descriptionEn: "The energy is concentrated in the flashing golden tones, symbolizing pursued treasures or divinity breaking through heavy textures." },
+                    { title: "洛神", englishTitle: "Drama", description: "这是一件双联作品。中间那道斜向的金色像是突然打开的一束光，极具戏剧性。它打破了背景那种沉静、深邃的蓝色调，产生了一种视觉上的爆发力。", descriptionEn: "A diptych where the diagonal golden streak acts as a sudden beam of light, breaking the deep blue background with dramatic visual power." },
+                    { title: "无极·若谷", englishTitle: "East", description: "这件作品的气质非常接近中国传统的青绿山水，但它是用岩粉这种极其现代和物理的方式呈现出来的。目前由上海藏家收藏并委托销售。", descriptionEn: "Features a temperament close to traditional blue-green landscapes, currently held by a Shanghai collector." }
                 ],
-                scenarios: [
-                    { title: "国际藏家", script: "You might recognize an echo of J.M.W. Turner's sublime landscapes here... It's a 'Material Landscape' manifesting nature's own geological forces." },
-                    { title: "华人资深藏家", script: "这是对赵无极、朱德群东方抒情抽象的当代回应，用岩粉模拟出了'皴、擦'的肌理。" }
+                salesScenarios: [
+                    { title: "国际藏家", target: "对地质、自然、宏大叙事感兴趣的国际客户", script: "You might recognize an echo of J.M.W. Turner's sublime landscapes here. But unlike traditional painting, Fang Zi doesn't 'paint' the mountains; he creates the conditions for them to grow. It's a 'Material Landscape' manifesting nature's own geological forces.", scriptEn: "You might recognize an echo of J.M.W. Turner's sublime landscapes here..." },
+                    { title: "华人资深藏家", target: "对东方美学、抒情抽象有研究的藏家", script: "这件作品是对赵无极、朱德群那一代东方抒情抽象的当代回应。不同的是，房梓用岩粉这种矿物材料，在二维平面上模拟出了大自然数万年才能形成的'皴、擦'肌理。", scriptEn: "A contemporary response to the lyrical abstraction of Zao Wou-Ki..." }
                 ]
             },
             {
@@ -41,163 +44,164 @@
                 name: "朱迪",
                 englishName: "Zhu Di",
                 tag: "当代瓷板",
-                bio: "朱迪的作品是当代瓷板画的顶尖实验。在1300度以上的窑火中，让材料本身说话。",
-                bioEn: "Zhu Di's works represent cutting-edge experimentation in contemporary porcelain panel painting.",
+                bio: "朱迪曾任教于威尼斯大学，他的作品是当代瓷板画的顶尖实验。他在1300度以上的窑火中，通过对釉料、矿物材料和火的精准控制，让材料本身说话。",
+                bioEn: "Former teacher at Ca' Foscari University, Zhu Di pioneers contemporary porcelain painting using high-temperature glazes.",
                 artworks: [
-                    { title: "喜马拉雅", titleEn: "Himalayas", desc: "云雪与岩层交叠，色彩细微变化形成雾气空间感。", descEn: "Overlapping clouds and rock layers create a misty spatial sense." }
+                    { title: "喜马拉雅", englishTitle: "Himalayas", description: "这幅作品呈现出一种类似云雪与岩层交叠的结构。瓷板画最难的是控制那种透明感，朱迪通过多次叠烧，让色彩产生了非常细微的变化，形成了一种雾气氤氲的空间感。", descriptionEn: "Visualizes overlapping clouds and rock layers with subtle color transitions and a misty spatial sense." }
                 ]
             },
             {
                 id: "carlos",
                 name: "卡洛斯",
                 englishName: "Carlos García Lahoz",
-                tag: "公共艺术",
-                bio: "西班牙雕塑家，用简洁几何形体承载母性、孤独与希望等基本人类情感。",
-                bioEn: "Spanish sculptor using simple geometric forms to carry fundamental human emotions.",
+                tag: "几何抽象",
+                bio: "西班牙雕塑家卡洛斯擅长用最简洁的几何形体来承载人类最基本的情感：母性、孤独、希望。他的作品通常具有极强的公共艺术感。",
+                bioEn: "Spanish sculptor focusing on geometric forms that carry universal emotions like motherhood, solitude, and hope.",
                 artworks: [
-                    { title: "灵魂伴侣", titleEn: "Soulmates", desc: "两个几何体块相互咬合，像真实的人际关系。", descEn: "Geometric blocks interlocking like real interpersonal relationships." },
-                    { title: "时间终止", titleEn: "Expiry", desc: "被红链拴住的部分带有宿命感，将矛盾锁在黑色框架里。", descEn: "Chained by red links, it carries fatalistic tension within a frame." }
+                    { title: "灵魂伴侣", englishTitle: "Soulmates", description: "两个几何体块以一种非常巧妙的方式相互咬合，既独立又相互支撑。这不仅是物理上的平衡，也是对真实人际关系的一种隐喻。", descriptionEn: "Two geometric blocks interlock, representing independence and mutual support in human relationships." },
+                    { title: "时间终止", englishTitle: "Expiry", description: "黑色的几何框架中，被红色的链条锁住了一部分。这种强烈的色彩对比带有一种宿命感，仿佛艺术家试图将某种无法言说的矛盾锁死在秩序之中。", descriptionEn: "Red chains within a black frame create a fatalistic tension, locking contradictions into order." }
                 ]
             },
             {
                 id: "shenli",
                 name: "沈厉",
                 englishName: "Shen Li",
-                tag: "地貌抽象",
-                bio: "画面中突起与陷落、粗粝与流动并存。曾获中国当代陶瓷艺术展金奖。",
-                bioEn: "Features abstract spaces resembling geological structures. Gold Award winner.",
+                tag: "地貌陶瓷",
+                bio: "沈厉的作品关注的是陶瓷作为一种物质的“地质属性”。他的画面中突起与陷落、粗粝与流动并存。曾获中国当代陶瓷艺术展金奖。",
+                bioEn: "Shen Li explores the 'geological properties' of ceramics, creating surfaces where roughness and flow coexist.",
                 artworks: [
-                    { title: "散落系列", titleEn: "Crumblings", desc: "表面结构像被时间侵蚀过一样逐渐松动和漂移。", descEn: "Surface structures gradually loosen and drift as if eroded by time." }
+                    { title: "散落系列", englishTitle: "Crumblings", description: "表面结构像被时间侵蚀过一样逐渐松动和漂移。这是一种非常有张力的抽象空间，让人联想到干裂的大地或者干涸的河床。", descriptionEn: "Surface structures resemble erosion over time, evoking dried earth or riverbeds." }
                 ]
             },
             {
                 id: "xiaocao",
                 name: "小草",
                 englishName: "Xiao Cao",
-                tag: "釉画创作",
-                bio: "灵感来自对自然的细微观察。通过高温釉色流动形成自然生长的节奏。",
-                bioEn: "Inspired by nature, using high-temperature glazes to create a growth rhythm.",
+                tag: "釉面流动",
+                bio: "小草的灵感来自于对自然的微观观察。她通过控制高温釉色的流动和重叠，形成了一种自然生长的节奏。",
+                bioEn: "Inspired by microscopic nature, she controls high-temperature glazes to create organic rhythms of growth.",
                 artworks: [
-                    { title: "晴雨", titleEn: "Sunnyrain", desc: "暖色与冷色交错流动，像天气变化的瞬间。", descEn: "Warm and cool colors interweaving like a moment of weather change." }
+                    { title: "晴雨", englishTitle: "Sunnyrain", description: "色彩更加明艳，有一种向外生长的力量。蓝色背景中，大量垂直流动的釉色像瀑布或者植物的根系，形成一种非常活跃的视觉节奏。", descriptionEn: "Vivid colors and vertically flowing glazes resemble waterfalls or root systems." }
                 ]
             },
             {
                 id: "guozilong",
                 name: "郭子龙",
                 englishName: "Guo Zilong",
-                tag: "金属雕塑",
-                bio: "毕业于清华美院，用金属去做线条和支撑关系，产生向外延展的张力。",
-                bioEn: "Tsinghua graduate, using metal to create tension and logical order.",
+                tag: "空间雕塑",
+                bio: "郭子龙毕业于清华大学美术学院。他以金属和综合材料为媒介，用金属去做线条、体块和支撑关系，让雕塑在空间里产生一种持续向外延展的张力。",
+                bioEn: "Tsinghua graduate using metal to create lines and support relationships that extend tension into space.",
                 artworks: [
-                    { title: "竹叶", titleEn: "Bamboo Leaves", desc: "不锈钢光泽与阴影带来呼吸感，复刻东方禅意。", descEn: "Stainless steel luster and shadows replicate Eastern Zen spirit." }
+                    { title: "竹叶", englishTitle: "Bamboo Leaves", description: "不锈钢的金属光泽和镂空形成的阴影，让这幅作品有种'呼吸感'。它不再是文人画里的弱不禁风，而是一种非常有力量、有逻辑的秩序美。", descriptionEn: "Stainless steel luster and shadows create a 'breathing' effect, blending logic with Zen spirit." }
                 ]
             }
         ];
 
-        let currentLang = 'zh';
-        let searchQuery = '';
-        let selectedArtist = null;
+        let state = { lang: 'zh', query: '', view: 'list', activeArtist: null };
 
         function render() {
-            const app = document.getElementById('app');
+            const root = document.getElementById('app');
             const filtered = artists.filter(a => 
-                a.name.includes(searchQuery) || a.englishName.toLowerCase().includes(searchQuery.toLowerCase())
+                a.name.includes(state.query) || a.englishName.toLowerCase().includes(state.query.toLowerCase()) || a.tag.includes(state.query)
             );
 
-            if (selectedArtist) {
-                app.innerHTML = renderDetail(selectedArtist);
+            if (state.view === 'detail') {
+                root.innerHTML = renderDetail(state.activeArtist);
             } else {
-                app.innerHTML = renderList(filtered);
+                root.innerHTML = renderList(filtered);
             }
             lucide.createIcons();
+            window.scrollTo(0, 0);
         }
 
         function renderList(list) {
             return `
-                <nav class="p-6 border-b border-white/10 sticky top-0 bg-black/80 backdrop-blur-lg z-10 flex justify-between items-center">
-                    <div>
-                        <h1 class="text-xl font-bold tracking-tight text-white">深时美术馆 <span class="text-blue-500">·</span></h1>
-                        <p class="text-[10px] text-gray-500 uppercase tracking-widest">Sales Assistant Pro</p>
+                <header class="glass sticky top-0 z-50 p-5 pb-4">
+                    <div class="flex justify-between items-start mb-5">
+                        <div>
+                            <h1 class="text-2xl font-bold tracking-tighter text-white">深时美术馆 <span class="text-blue-500">.</span></h1>
+                            <p class="text-[10px] text-zinc-500 uppercase tracking-[0.2em] mt-1">Deep Time Gallery / Sales Pro</p>
+                        </div>
+                        <button onclick="toggleLang()" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-xs font-bold hover:bg-white/5 active:scale-90 transition">
+                            ${state.lang === 'zh' ? 'EN' : '中'}
+                        </button>
                     </div>
-                    <button onclick="toggleLang()" class="w-10 h-10 flex items-center justify-center rounded-full border border-white/10 bg-white/5 active:scale-90 transition">
-                        <span class="text-xs font-bold">${currentLang === 'zh' ? 'EN' : '中'}</span>
-                    </button>
-                </nav>
-
-                <div class="px-6 py-4">
-                    <div class="relative group">
-                        <i data-lucide="search" class="absolute left-4 top-3.5 w-4 h-4 text-gray-500 group-focus-within:text-blue-400"></i>
-                        <input type="text" oninput="handleSearch(event)" placeholder="${currentLang === 'zh' ? '搜索艺术家或关键词...' : 'Search...'}" 
-                            class="w-full bg-white/5 border border-white/10 rounded-2xl py-3 pl-12 pr-4 focus:outline-none focus:border-blue-500/50 transition">
+                    <div class="relative">
+                        <i data-lucide="search" class="absolute left-4 top-3.5 w-4 h-4 text-zinc-500"></i>
+                        <input type="text" oninput="doSearch(event)" placeholder="${state.lang === 'zh' ? '寻找艺术家、风格或作品...' : 'Search artists...'}" 
+                            class="w-full bg-white/5 border border-white/10 rounded-2xl py-3.5 pl-12 pr-4 text-sm focus:outline-none focus:border-blue-500/40 transition">
                     </div>
-                </div>
+                </header>
 
-                <div class="grid gap-4 px-6">
+                <main class="flex-1 p-5 space-y-4">
                     ${list.map(a => `
-                        <div onclick='showArtist("${a.id}")' class="glass-card p-6 rounded-3xl active:scale-[0.98] transition-transform">
+                        <div onclick='openArtist("${a.id}")' class="glass p-6 rounded-[2rem] active:scale-[0.98] transition-all group">
                             <div class="flex justify-between items-start mb-3">
-                                <h3 class="text-xl font-bold text-white">${currentLang === 'zh' ? a.name : a.englishName}</h3>
-                                <span class="text-[9px] px-2 py-1 rounded-md bg-blue-500/20 text-blue-400 border border-blue-500/30 uppercase font-bold tracking-tighter">${a.tag}</span>
+                                <h3 class="text-xl font-bold text-white group-hover:text-blue-400 transition">${state.lang === 'zh' ? a.name : a.englishName}</h3>
+                                <span class="text-[9px] px-2.5 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20 uppercase font-black">${a.tag}</span>
                             </div>
-                            <p class="text-sm text-gray-400 leading-relaxed line-clamp-2">${currentLang === 'zh' ? a.bio : a.bioEn}</p>
-                            <div class="mt-4 flex items-center text-[10px] text-gray-600 font-bold tracking-widest uppercase">
-                                <span>View Collection</span>
-                                <i data-lucide="chevron-right" class="w-3 h-3 ml-1"></i>
+                            <p class="text-sm text-zinc-400 leading-relaxed line-clamp-3">${state.lang === 'zh' ? a.bio : a.bioEn}</p>
+                            <div class="mt-5 flex items-center text-[10px] text-zinc-600 font-bold tracking-widest uppercase">
+                                <span>Learn More</span>
+                                <i data-lucide="arrow-right" class="w-3 h-3 ml-1.5 group-hover:translate-x-1 transition-transform"></i>
                             </div>
                         </div>
                     `).join('')}
-                </div>
+                    ${list.length === 0 ? '<p class="text-center py-20 text-zinc-600">未找到相关内容</p>' : ''}
+                </main>
+                <footer class="p-8 text-center text-[9px] text-zinc-600 tracking-[0.3em] uppercase opacity-50 safe-area-bottom">Deep Time Young © 2026</footer>
             `;
         }
 
         function renderDetail(a) {
             return `
-                <div class="animate-in fade-in slide-in-from-bottom-4 duration-300">
-                    <div class="p-6 sticky top-0 bg-black/80 backdrop-blur-md flex items-center border-b border-white/10 mb-6">
-                        <button onclick="goBack()" class="p-2 -ml-2 hover:bg-white/5 rounded-full"><i data-lucide="chevron-left"></i></button>
-                        <h2 class="ml-2 font-bold text-lg">${currentLang === 'zh' ? a.name : a.englishName}</h2>
-                    </div>
-                    
-                    <div class="px-6">
-                        <section class="mb-8">
-                            <h4 class="text-[10px] font-black text-blue-500 uppercase tracking-[0.2em] mb-3">${currentLang === 'zh' ? '艺术家简介' : 'Biography'}</h4>
-                            <p class="text-gray-300 leading-relaxed">${currentLang === 'zh' ? a.bio : a.bioEn}</p>
+                <div class="animate-in fade-in slide-in-from-right-10 duration-500 flex flex-col min-h-screen">
+                    <nav class="glass sticky top-0 z-50 p-5 flex items-center justify-between">
+                        <button onclick="goBack()" class="flex items-center text-zinc-400"><i data-lucide="chevron-left" class="w-6 h-6"></i></button>
+                        <span class="font-bold text-sm tracking-tight">${state.lang === 'zh' ? a.name : a.englishName}</span>
+                        <div class="w-6"></div>
+                    </nav>
+
+                    <div class="p-6 space-y-10 flex-1">
+                        <section>
+                            <h4 class="text-[10px] font-black text-blue-500 uppercase tracking-[0.25em] mb-4">${state.lang === 'zh' ? '艺术家背景' : 'The Artist'}</h4>
+                            <p class="text-zinc-200 leading-relaxed text-sm whitespace-pre-line">${state.lang === 'zh' ? a.bio : a.bioEn}</p>
                         </section>
 
-                        <section class="mb-8">
-                            <h4 class="text-[10px] font-black text-blue-500 uppercase tracking-[0.2em] mb-4">${currentLang === 'zh' ? '重点作品' : 'Featured Works'}</h4>
+                        <section>
+                            <h4 class="text-[10px] font-black text-blue-500 uppercase tracking-[0.25em] mb-5">${state.lang === 'zh' ? '核心作品解析' : 'Featured Artworks'}</h4>
                             <div class="space-y-4">
                                 ${a.artworks.map(w => `
-                                    <div class="detail-card p-4">
-                                        <div class="font-bold text-white mb-1">${currentLang === 'zh' ? w.title : w.titleEn}</div>
-                                        <p class="text-xs text-gray-400 leading-relaxed">${currentLang === 'zh' ? w.desc : w.descEn}</p>
+                                    <div class="p-5 rounded-3xl bg-white/[0.03] border border-white/5">
+                                        <div class="font-bold text-white mb-2">${state.lang === 'zh' ? w.title : w.englishTitle}</div>
+                                        <p class="text-xs text-zinc-400 leading-relaxed">${state.lang === 'zh' ? w.description : w.descriptionEn}</p>
                                     </div>
                                 `).join('')}
                             </div>
                         </section>
 
-                        ${a.scenarios ? `
-                        <section>
-                            <h4 class="text-[10px] font-black text-amber-500 uppercase tracking-[0.2em] mb-4">${currentLang === 'zh' ? '销售话术库' : 'Sales Scripts'}</h4>
+                        ${a.salesScenarios ? `
+                        <section class="pb-10">
+                            <h4 class="text-[10px] font-black text-amber-500 uppercase tracking-[0.25em] mb-5">${state.lang === 'zh' ? '销售话术实战' : 'Sales Scripts'}</h4>
                             <div class="space-y-4">
-                                ${a.scenarios.map(s => `
-                                    <div class="bg-amber-500/5 border border-amber-500/20 p-5 rounded-2xl">
-                                        <div class="text-[10px] font-bold text-amber-500 mb-2">${s.title}</div>
-                                        <p class="text-sm text-amber-100/80 leading-relaxed italic">"${s.script}"</p>
+                                ${a.salesScenarios.map(s => `
+                                    <div class="scenario-tag p-6 rounded-[2rem] relative overflow-hidden">
+                                        <div class="text-[10px] font-black uppercase mb-3 opacity-80">${s.title} ⮕ ${s.target}</div>
+                                        <p class="text-sm text-zinc-100 leading-relaxed italic">"${state.lang === 'zh' ? s.script : s.scriptEn}"</p>
+                                        <i data-lucide="quote" class="absolute -right-2 -bottom-2 w-16 h-16 opacity-5 rotate-12"></i>
                                     </div>
                                 `).join('')}
                             </div>
-                        </section>
-                        ` : ''}
+                        </section>` : ''}
                     </div>
                 </div>
             `;
         }
 
-        window.toggleLang = () => { currentLang = currentLang === 'zh' ? 'en' : 'zh'; render(); };
-        window.handleSearch = (e) => { searchQuery = e.target.value; render(); };
-        window.showArtist = (id) => { selectedArtist = artists.find(a => a.id === id); window.scrollTo(0,0); render(); };
-        window.goBack = () => { selectedArtist = null; render(); };
+        window.toggleLang = () => { state.lang = state.lang === 'zh' ? 'en' : 'zh'; render(); };
+        window.doSearch = (e) => { state.query = e.target.value; render(); };
+        window.openArtist = (id) => { state.activeArtist = artists.find(a => a.id === id); state.view = 'detail'; render(); };
+        window.goBack = () => { state.view = 'list'; render(); };
 
         render();
     </script>
